@@ -166,14 +166,20 @@ def get_rozklad_string(group_id, date, subgroup, user_id):
     if len(today_changes) >= 1:
         for time in today_changes[0]:
             if today_changes[0][time] == "REMOVE":
-                del rozkl[0][array_week][week_day][time]
+                try:
+                    del rozkl[0][array_week][week_day][time]
+                except (KeyError):
+                    ""
             else:
                 rozkl[0][array_week][week_day][time] = today_changes[0][time]
 
         if len(today_changes) >= 2:
             for time in today_changes[1]:
                 if today_changes[1][time] == "REMOVE":
-                    del rozkl[1][array_week][week_day][time]
+                    try:
+                        del rozkl[1][array_week][week_day][time]
+                    except (KeyError):
+                        ""
                 else:
                     rozkl[1][array_week][week_day][time] = today_changes[1][time]
 
@@ -787,7 +793,7 @@ def choose_language(update, context):
     update.message.reply_text('Choose prefered language', reply_markup=reply_markup)
 
 # Enter your token here
-botToken = Null
+botToken = None
 
 def main():
     """Start the bot."""
